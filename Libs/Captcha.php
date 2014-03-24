@@ -1,5 +1,5 @@
 <?php
-namespace Coxis\Captcha\Libs;
+namespace Asgard\Captcha\Libs;
 
 class Captcha {
 	protected static $font = 'monofont.ttf';
@@ -21,7 +21,7 @@ class Captcha {
 		$font = dirname(__FILE__).'/../'.static::$font;
 
 		$code = static::generateCode($characters);
-		\Coxis\Core\App::get('session')->set('captcha', $code);
+		\Asgard\Core\App::get('session')->set('captcha', $code);
 		/* font size will be 75% of the image height */
 		$font_size = $height * 0.75;
 		if(!$image = @imagecreate($width, $height))
@@ -49,6 +49,6 @@ class Captcha {
 	}
 
 	public static function test($val) {
-		return \Coxis\Core\App::get('session')->get('captcha') == $val;
+		return \Asgard\Core\App::get('session')->get('captcha') == $val;
 	}
 }
