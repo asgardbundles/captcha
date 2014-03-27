@@ -18,7 +18,7 @@ class Captcha {
 	}
  
 	public static function image($width='120',$height='40',$characters='6') {
-		$font = dirname(__FILE__).'/../'.static::$font;
+		$font = __dir__.'/../'.static::$font;
 
 		$code = static::generateCode($characters);
 		\Asgard\Core\App::get('session')->set('captcha', $code);
