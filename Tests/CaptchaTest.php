@@ -3,12 +3,12 @@ class CaptchaTest extends PHPUnit_Framework_TestCase {
 	public static function setUpBeforeClass() {
 		if(!defined('_ENV_'))
 			define('_ENV_', 'test');
-		require_once _VENDOR_DIR_.'autoload.php';
-		\Asgard\Core\App::instance(true)->config->set('bundles', array(
+		\Asgard\Container\Container::instance(true)->config->set('bundles', array(
 				__DIR__.'/..',
+				new \Asgard\Http\Bundle
 		))
-		->set('bundlesdirs', array());
-		\Asgard\Core\App::loadDefaultApp(false);
+		->set('bundlesdirs', []);
+		\Asgard\Container\Container::loadDefaultApp(false);
 	}
 	
 	public function test1() {
@@ -16,7 +16,7 @@ class CaptchaTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue(is_resource($img));
 		$this->assertEquals('gd', get_resource_type($img));
 
-		$response = Asgard\Core\Controller::run('Asgard\Captcha\Controllers\CaptchaController', 'captcha');
+		$response = Asgard\Http\Controller::run('Asgard\Captcha\Controllers\CaptchaController', 'captcha');
 		$this->assertEquals('image/jpeg', $response->getHeader('content-type'));
 		$this->assertRegExp('/CREATOR: gd-jpeg v1.0/', $response->getContent());
 	}
