@@ -44,7 +44,7 @@ class Captcha {
 
 		$code = static::generateCode($characters);
 		#todo, utiliser comme service?
-		\Asgard\Container\Container::instance()->get('request')->session->set('captcha', $code);
+		\Asgard\Container\Container::singleton()->get('request')->session->set('captcha', $code);
 		/* font size will be 75% of the image height */
 		$font_size = $height * 0.75;
 		if(!$image = imagecreate($width, $height))
