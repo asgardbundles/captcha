@@ -1,7 +1,9 @@
 <?php
 class CaptchaTest extends PHPUnit_Framework_TestCase {
 	public function test1() {
-		\Asgard\Container\Container::singleton()['request'] = new \Asgard\Http\Request;
+		$httpKernel = new \Asgard\Http\HttpKernel;
+		$httpKernel->addRequest(new \Asgard\Http\Request);
+		\Asgard\Container\Container::singleton()['httpKernel'] = $httpKernel;
 		$img = Asgard\Captcha\Libs\Captcha::image();
 		$this->assertTrue(is_resource($img));
 		$this->assertEquals('gd', get_resource_type($img));

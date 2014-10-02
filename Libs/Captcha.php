@@ -3,17 +3,17 @@ namespace Asgard\Captcha\Libs;
 
 /**
  * Captcha library.
- * 
+ *
  * @author Michel Hognerud <michel@hognerud.net>
 */
 class Captcha {
 	protected static $font = 'monofont.ttf';
-	
+
 	/**
 	 * Generates a random string.
-	 * 
+	 *
 	 * @param integer length Length of the string.
-	 * 
+	 *
 	 * @return string
 	*/
 	protected static function generateCode($length=10) {
@@ -25,26 +25,26 @@ class Captcha {
 			$code .= substr($possible, mt_rand(0, strlen($possible)-1), 1);
 		return $code;
 	}
-	
+
 	/**
 	 * Generates a captcha image.
-	 * 
+	 *
 	 * @param integer width Image width.
 	 * @param integer height Image height.
 	 * @param integer characters String length.
-	 * 
+	 *
 	 * @throws \Exception Problem with GD.
-	 * 
+	 *
 	 * @return Ressource Image ressource.
-	 * 
-	 * @api 
+	 *
+	 * @api
 	*/
 	public static function image($width='120', $height='40', $characters='6') {
 		$font = __DIR__.'/../'.static::$font;
 
 		$code = static::generateCode($characters);
 		#todo, utiliser comme service?
-		\Asgard\Container\Container::singleton()->get('request')->session->set('captcha', $code);
+		\Asgard\Container\Container::singleton()['httpKernel']->getRequest()->session->set('captcha', $code);
 		/* font size will be 75% of the image height */
 		$font_size = $height * 0.75;
 		if(!$image = imagecreate($width, $height))
@@ -68,15 +68,15 @@ class Captcha {
 			throw new Exception('Error in imagettftext function');
 		return $image;
 	}
-	
+
 	/**
 	 * Tests the given string against the captcha.
-	 * 
+	 *
 	 * @param string val
-	 * 
+	 *
 	 * @return boolean true|false for success.
-	 * 
-	 * @api 
+	 *
+	 * @api
 	*/
 	public static function test($val) {
 		return \Asgard\Container\Container::get('session')->get('captcha') == $val;
