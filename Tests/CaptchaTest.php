@@ -8,7 +8,7 @@ class CaptchaTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue(is_resource($img));
 		$this->assertEquals('gd', get_resource_type($img));
 
-		$controller = new \Asgard\Captcha\Controllers\CaptchaController;
+		$controller = new \Asgard\Captcha\Controller\CaptchaController;
 		$response = $controller->run('captcha');
 		$this->assertEquals('image/jpeg', $response->getHeader('content-type'));
 		$this->assertRegExp('/CREATOR: gd-jpeg v1.0/', $response->getContent());

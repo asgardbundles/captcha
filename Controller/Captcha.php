@@ -1,7 +1,7 @@
 <?php
-namespace Asgard\Captcha\Controllers;
+namespace Asgard\Captcha\Controller;
 
-class CaptchaController extends \Asgard\Http\Controller {
+class Captcha extends \Asgard\Http\Controller {
 	/**
 	 * @Route("captcha")
 	 */
